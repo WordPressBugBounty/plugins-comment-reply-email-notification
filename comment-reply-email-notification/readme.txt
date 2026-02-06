@@ -2,8 +2,8 @@
 Contributors: awelzel, guhemama
 Tags: comment, email, reply, notification
 Requires at least: 4.4.0
-Tested up to: 6.8
-Stable tag: 1.37.0
+Tested up to: 6.9
+Stable tag: 1.39.0
 Donate link: https://paypal.me/ArnoWelzel
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -76,6 +76,14 @@ add_filter('cren_comment_subscribe_html', function(string $html_output, string $
 }, 10, 3);`
 
 == Changelog ==
+
+= 1.39.0 =
+
+* Fix compatibility issues with WordPress 6.6 or earlier.
+
+= 1.38.0 =
+
+* Fix double subscribe checkboxes when logged in for WordPress 6.9 or newer.
 
 = 1.37.0 =
 

@@ -3,7 +3,7 @@ namespace CommentReplyEmailNotification;
 
 class CommentReplyEmailNotification
 {
-    const CREN_VERSION = '1.37.0';
+    const CREN_VERSION = '1.39.0';
 
     /**
      * Constructor
@@ -19,7 +19,12 @@ class CommentReplyEmailNotification
         add_action('wp_set_comment_status', [$this, 'commentStatusUpdate'], 99, 2);
         add_filter('preprocess_comment', [$this, 'verifyCommentMetaData']);
         add_filter('comment_form_default_fields', [$this, 'commentFields']);
-        add_filter('comment_form_submit_field', [$this, 'commentFieldsLoggedIn']);
+        if (
+                !function_exists('wp_get_wp_version') ||
+                (function_exists('wp_get_wp_version') && wp_get_wp_version() < '6.9')
+        ) {
+            add_filter('comment_form_submit_field', [$this, 'commentFieldsSubmit']);
+        }
         add_action('comment_post', [$this, 'persistSubscriptionOptIn']);
         add_action('init', [$this, 'init']);
     }
@@ -417,7 +422,7 @@ class CommentReplyEmailNotification
      * @param  string $submitField
      * @return string
      */
-    function commentFieldsLoggedIn($submitField)
+    function commentFieldsSubmit($submitField)
     {
         $checkbox = '';
 
